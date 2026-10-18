@@ -1,7 +1,3 @@
-# apt packages Streamlit Community Cloud installs before requirements.txt.
-# RDKit's drawing module (rdkit.Chem.Draw.rdMolDraw2D) links against X11
-# libraries that are not present on a headless container, and importing it
-# without them raises ImportError. These are the ones it needs.
 libxrender1
 libxext6
 libsm6

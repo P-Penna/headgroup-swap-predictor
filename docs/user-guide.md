@@ -38,6 +38,15 @@ To deploy it, point Streamlit Community Cloud at this repository with
 `app/streamlit_app.py` as the main file. It installs `requirements.txt` from the
 repository root, and nothing in the repository needs changing.
 
+`packages.txt` is also read, and holds the apt packages RDKit's drawing module needs:
+`rdkit.Chem.Draw.rdMolDraw2D` links against X11 libraries that a headless container
+does not have, and importing it without them raises
+`ImportError: libXrender.so.1: cannot open shared object file`. **That file must
+contain package names only** — every line is passed straight to `apt-get`, so a
+comment line becomes a package name and the install fails. The interfaces import
+`Draw` inside a `try`/`except` as well, so a host that ignores `packages.txt` loses
+the structure pictures rather than the whole app.
+
 A Gradio version of the same interface is in `app/app.py` for local use
 (`pip install gradio==6.30.0`, then `python app/app.py`). Both call the same
 `app/predict.py`, so they always agree.
