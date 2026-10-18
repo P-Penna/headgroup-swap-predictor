@@ -25,10 +25,6 @@ to A except for the headgroup), and a protein target T — and the output is
 **Typical error 8.6-fold in potency** — RMSE 0.9339 log units, three-class MCC +0.369,
 measured on 16,116 held-out comparisons whose molecules were never seen in training.
 
-That is good enough to rank a handful of candidate swaps and nowhere near good enough to
-tell you a compound is worth making. Two different labs measuring *the same* pair disagree
-by about 0.55 log units (3.5-fold), so no model built on this data can do much better.
-
 | | RMSE (log units) | typical error | three-class MCC |
 |---|---|---|---|
 | **this model** (5-seed ensemble blended 50/50 with the baseline) | **0.9339** | **8.6×** | **+0.369** |
