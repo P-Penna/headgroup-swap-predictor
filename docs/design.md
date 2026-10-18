@@ -90,7 +90,7 @@ The side benefit is the one the interface uses: the spread across seeds is a fre
 per-prediction measure of how much the model disagrees with itself, which the single
 headline RMSE cannot give you.
 
-## The classification head is dead weight
+## The classification head is inactive in the published models
 
 The architecture has a three-class head, but the published models were trained with
 `--class-weight 0`, so it contributed nothing to the loss and learned nothing. Its logits
