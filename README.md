@@ -37,7 +37,8 @@ measured on 16,116 held-out comparisons whose molecules were never seen in train
 
 Each row is the mean of five molecule-disjoint test folds, on the same 16,116
 comparisons. The model beats both `zero` and `shrunk_target_mean` by more than
-2 standard errors on all five folds, paired and clustered by comparison.
+2 standard errors on all five folds, paired and clustered by comparison. Rows are not ordered by performance: `transformation × environment median` has a
+higher RMSE than predicting no change, but a higher MCC.
 
 ![Predicted against measured Δp for 16,116 held-out comparisons, as a log-scaled
 hexagonal density plot with the perfect-prediction diagonal and a ±RMSE band](results/predicted_vs_measured.png)
