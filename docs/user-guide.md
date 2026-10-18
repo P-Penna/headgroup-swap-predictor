@@ -1,5 +1,7 @@
 # User guide
 
+**Live app: [headgroup-swap.streamlit.app](https://headgroup-swap.streamlit.app)** — nothing to install.
+
 ## What the model does
 
 You give it three things:

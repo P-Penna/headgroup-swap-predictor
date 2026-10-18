@@ -1,5 +1,15 @@
 # Headgroup swap potency model
 
+### ▶ [Try it: headgroup-swap.streamlit.app](https://headgroup-swap.streamlit.app)
+
+[![Open in Streamlit](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://headgroup-swap.streamlit.app)
+[![Dataset on Zenodo](https://zenodo.org/badge/DOI/10.5281/zenodo.23456998.svg)](https://doi.org/10.5281/zenodo.23456998)
+[![Licence](https://img.shields.io/badge/licence-MIT%20code%20%7C%20CC--BY--SA--3.0%20data-blue)](LICENSE)
+
+Paste two SMILES, pick a protein target, get a prediction. Nothing to install.
+
+---
+
 Predicts how much a drug's potency changes when its acidic headgroup is swapped for a
 bioisostere — a carboxylic acid replaced by a tetrazole, say — on a given protein target.
 
