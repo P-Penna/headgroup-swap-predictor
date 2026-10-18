@@ -1,0 +1,4 @@
+# Checkpoints and the data slice are binary-ish; never let git mangle them.
+*.pt binary
+*.png binary
+*.csv text eol=lf

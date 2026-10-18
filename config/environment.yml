@@ -1,0 +1,35 @@
+# Environment for the headgroup swap potency model and its interface.
+#
+#   conda env create -f config/environment.yml
+#   conda activate headgroup-swap
+#   python app/app.py
+#
+# Versions are pinned to what the published result was produced and the
+# interface was tested on (macOS arm64, 2026-10).
+#
+# Everything comes from conda-forge except gradio, which conda-forge carries
+# but lags on, so it is installed by pip. Do NOT `pip install` torch, rdkit or
+# chemprop into this env: the pip builds ship their own copies of compiled
+# libraries which clash with the conda ones.
+#   - pip torch bundles its own OpenMP -> Python aborts with "OMP: Error #15"
+#   - pip chemprop pulls cuik-molmaker-pin, built against pip rdkit -> ImportError
+#
+# Hugging Face Spaces does not read this file; it reads requirements.txt at the
+# repository root. The two are kept at the same versions on purpose.
+name: headgroup-swap
+channels:
+  - conda-forge
+  - nodefaults
+dependencies:
+  - python=3.11.16
+  - rdkit=2026.03.6
+  - pandas=3.0.6
+  - numpy=2.4.6
+  - scikit-learn=1.9.1
+  - pytorch=2.13.0
+  - chemprop=2.3.1
+  - pytest=9.1.1
+  - matplotlib=3.11.2
+  - pip=26.2.1
+  - pip:
+      - gradio==6.30.0

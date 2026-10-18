@@ -1,0 +1,23 @@
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+*.egg-info/
+.venv/
+
+# Local settings (config/.env.example is the template that IS tracked)
+.env
+
+# The full pairs.csv comes from Zenodo, not from git (620 MB; see docs/data.md)
+data/pairs.csv
+data/pairs.csv.gz
+
+# Training and scoring output. The published tables in results/ are tracked
+# by name; anything a rerun produces is not.
+results/train_*.csv
+results/fit_*.csv
+results/model_*.csv
+models/*.pt.tmp
+
+# OS
+.DS_Store

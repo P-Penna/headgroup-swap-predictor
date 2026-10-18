@@ -1,0 +1,49 @@
+MIT License
+
+Copyright (c) 2026 Pardhiva Penna
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+
+-------------------------------------------------------------------------------
+DATA IS LICENSED SEPARATELY
+-------------------------------------------------------------------------------
+
+The MIT licence above covers the CODE in this repository: everything under
+app/ and tests/.
+
+It does NOT cover the DATA. `data/pairs_bioisostere.csv`, the full `pairs.csv`
+hosted on Zenodo, and `data/target_properties.csv` are derived from ChEMBL
+version 37, which is distributed by the European Bioinformatics Institute
+under the Creative Commons Attribution-ShareAlike 3.0 Unported licence
+(CC BY-SA 3.0): https://creativecommons.org/licenses/by-sa/3.0/
+
+Those files, and any dataset you build from them, carry that licence with
+them. In practice this means you must attribute ChEMBL and share any derived
+dataset under the same terms. Please cite:
+
+  Zdrazil B, Felix E, Hunter F, et al. The ChEMBL Database in 2023: a drug
+  discovery platform spanning multiple bioactivity data types and time
+  periods. Nucleic Acids Research. 2024;52(D1):D1180-D1192.
+  doi:10.1093/nar/gkad1004
+
+The trained weights in models/ were derived from that data. They are released
+under CC BY-SA 3.0 as well, on the conservative reading that a model trained
+on a ShareAlike dataset inherits its terms. If you only use the code, the MIT
+licence is all that applies to you.
