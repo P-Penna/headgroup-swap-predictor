@@ -48,23 +48,29 @@ comparisons. The model beats both `zero` and `shrunk_target_mean` by more than
 ![Predicted against measured Δp for 16,116 held-out comparisons, as a log-scaled
 hexagonal density plot with the perfect-prediction diagonal and a ±RMSE band](results/predicted_vs_measured.png)
 
-*Every held-out comparison, all five test folds pooled. Each hexagon is shaded by
-how many comparisons fell in it, on a log scale. The shaded band is one typical
-error either side of perfect and holds 73% of them. The orange line is what the
-model actually does: its slope of 0.34, against the diagonal's 1.00, is the model
-squashing big changes toward zero — it reads the direction of a swap far better
-than the size. Limit 2 in `docs/limits.md` gives the numbers.*
+**Figure 1.** Predicted against measured Δp for all 16,116 held-out comparisons,
+pooled over the five molecule-disjoint test folds. Hexagons are shaded by the
+number of comparisons they contain (log scale). The grey band spans ±1 RMSE
+(0.93 log units) about the identity line and contains 73% of comparisons. The
+least-squares fit has slope 0.34 rather than 1.00: the model recovers the
+direction of a swap far more reliably than its magnitude, compressing large
+changes toward zero (`docs/limits.md`, limit 2). The upper axis gives the
+corresponding fold-change in potency.
 
 ![Held-out RMSE for every fold, comparing the model with all three required
 baselines and the shrunk_target_mean reference](results/rmse_by_fold.png)
 
-*The same comparisons score every bar within a group, so the bars are directly
-comparable. The rightmost group is the headline. The model beats every baseline
-on every fold, and no bar comes near the noise floor — the limit set by labs
-disagreeing with each other, not by the model.*
+**Figure 2.** Held-out RMSE for each test fold and for the mean over folds, which
+is the reported figure. Every bar within a group is scored on the same
+comparisons, so bars are directly comparable. All three required baselines are
+shown alongside the stronger `shrunk_target_mean` reference. The blend improves
+on every baseline in every fold; no configuration approaches the experimental
+noise floor, which is set by disagreement between laboratories rather than by
+the model.
 
-Both figures are redrawn from the published per-row predictions by
-`python app/make_figures.py`, so they cannot drift from the tables.
+Both figures are regenerated from the published per-row predictions by
+`python app/make_figures.py`, as 400 dpi PNG and as vector PDF, so they cannot
+drift from the tables.
 
 ## Run the interface
 

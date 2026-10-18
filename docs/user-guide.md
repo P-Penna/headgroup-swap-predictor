@@ -126,7 +126,9 @@ python app/make_figures.py
 ```
 
 Both figures in `results/` are regenerated from the published per-row predictions, so
-they cannot drift away from the numbers in the tables.
+they cannot drift away from the numbers in the tables. Each is written twice: a 400 dpi
+PNG for the README and a vector PDF for print, sized to journal columns (89 mm single,
+183 mm double) and set in Helvetica with a colour-blind-safe palette.
 
 ## Running the tests
 
