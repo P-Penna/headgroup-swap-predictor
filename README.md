@@ -28,7 +28,7 @@ measured on 16,116 held-out comparisons whose molecules were never seen in train
 | | RMSE (log units) | typical error | three-class MCC |
 |---|---|---|---|
 | **this model** (5-seed ensemble blended 50/50 with the baseline) | **0.9339** | **8.6×** | **+0.369** |
-| the ensemble alone, without the blend | 0.9243 | 8.4× | +0.373 |
+| the ensemble alone — better, but not selectable (see below) | 0.9243 | 8.4× | +0.373 |
 | best baseline (`shrunk_target_mean`) | 1.0396 | 11.0× | +0.328 |
 | transformation median | 1.0817 | 12.1× | +0.010 |
 | transformation × environment median | 1.1419 | 13.9× | +0.181 |
