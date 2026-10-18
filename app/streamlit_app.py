@@ -17,7 +17,17 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 import streamlit as st  # noqa: E402
 from rdkit import Chem  # noqa: E402
-from rdkit.Chem import Draw  # noqa: E402
+
+# rdkit.Chem.Draw links against X11 libraries (libXrender and friends). They are
+# listed in packages.txt so a hosted container has them, but a host that ignores
+# that file would raise ImportError here and take the whole app down over a
+# picture. The structures are a convenience; the prediction is the point.
+try:
+    from rdkit.Chem import Draw  # noqa: E402
+    DRAWING_AVAILABLE = True
+except ImportError:  # pragma: no cover - depends on the host's system libraries
+    Draw = None
+    DRAWING_AVAILABLE = False
 
 from app.predict import (  # noqa: E402
     BLEND_WEIGHT, FOLD, HEADLINE_FOLD_ERROR, HEADLINE_MCC, HEADLINE_RMSE,
@@ -52,6 +62,8 @@ def _targets():
 
 
 def _structure_image(smiles_a, smiles_b):
+    if not DRAWING_AVAILABLE:
+        return None
     mols, labels = [], []
     for label, smiles in (("A", smiles_a), ("B", smiles_b)):
         mol = Chem.MolFromSmiles(smiles.strip()) if smiles and smiles.strip() else None

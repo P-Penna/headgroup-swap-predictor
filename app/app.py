@@ -18,7 +18,16 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 import gradio as gr  # noqa: E402
 from rdkit import Chem  # noqa: E402
-from rdkit.Chem import Draw  # noqa: E402
+
+# See the note in app/streamlit_app.py: rdkit.Chem.Draw needs X11 libraries that
+# a headless container may not have, and a missing picture must not stop the
+# interface working.
+try:
+    from rdkit.Chem import Draw  # noqa: E402
+    DRAWING_AVAILABLE = True
+except ImportError:  # pragma: no cover - depends on the host's system libraries
+    Draw = None
+    DRAWING_AVAILABLE = False
 
 from app.predict import (  # noqa: E402
     BLEND_WEIGHT, FOLD, HEADLINE_FOLD_ERROR, HEADLINE_MCC, HEADLINE_RMSE,
@@ -67,6 +76,8 @@ EXAMPLES = [
 
 
 def _structures(smiles_a, smiles_b):
+    if not DRAWING_AVAILABLE:
+        return None
     mols, labels = [], []
     for label, smiles in (("A", smiles_a), ("B", smiles_b)):
         mol = Chem.MolFromSmiles(smiles.strip()) if smiles and smiles.strip() else None
