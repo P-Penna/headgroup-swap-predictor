@@ -16,7 +16,33 @@ compound on one target, the ordering carries some signal. The three-class MCC of
 says the worse / same / better call is substantially better than chance (0.0) and a long
 way from reliable (1.0).
 
-## 2. There is a floor it cannot go below, and it is not far away
+## 2. It gets the direction of a change right far better than the size
+
+The model systematically **under-calls how big a change is**. Fit a straight line
+through predicted against measured and its slope is **0.34**, where a model that got
+sizes right would give 1.00.
+
+In concrete terms, from the 16,116 held-out comparisons:
+
+| what the lab measured | what the model predicted, on average |
+|---|---|
+| a gain above +2 log units (>100× more potent), 807 cases | **+1.18** |
+| a loss below −2 log units (>100× less potent), 553 cases | **−0.81** |
+
+So a swap that really gained 100-fold is typically called as a 15-fold gain. The sign
+is usually right; the magnitude is squashed toward zero by roughly a factor of three.
+
+This is ordinary behaviour for a model predicting under uncertainty — guessing near the
+average is how you minimise squared error when you are unsure — and it is partly a real
+property of the data, where 68% of measured changes are under one log unit. But it has a
+practical consequence worth stating plainly: **if you are screening for a dramatic
+improvement, this model will under-sell the winners.** Use it to rank candidates, not to
+estimate how much you will gain.
+
+The effect is visible in `results/predicted_vs_measured.png` as the gap between the
+orange line (what the model does) and the diagonal (what a perfect model would do).
+
+## 3. There is a floor it cannot go below, and it is not far away
 
 Two different papers measuring the same molecule pair on the same target disagree by
 about **0.55 log units** on the difference — 3.5-fold — measured on this project's own
@@ -28,7 +54,7 @@ real room for improvement, but the headline cannot approach zero no matter what,
 model reporting much below 0.55 on this data should be assumed to have a leak rather than
 a breakthrough.
 
-## 3. No skill on proteins it never saw
+## 4. No skill on proteins it never saw
 
 Much of the signal is *which protein* the swap is made on: an acid to hydroxamic acid swap
 is worth a great deal on a zinc metalloenzyme and little elsewhere. The model learns one
@@ -41,7 +67,7 @@ median, not this model, and the interface will not pretend otherwise. Even insid
 list, a target with 4 training pairs is far weaker than one with 900, which is why the
 dropdown shows each target's training count.
 
-## 4. It does not check that your two molecules are otherwise identical
+## 5. It does not check that your two molecules are otherwise identical
 
 The model was trained on matched pairs: two molecules identical apart from one headgroup.
 The interface checks that **exactly one headgroup differs** — one removed from A, one
@@ -70,7 +96,7 @@ interface, the honest position is to say it has not been checked. The one check 
 survive calibration is a size guard: no training pair differed by more than **45.8%** of
 its heavy atoms, so the interface warns past that.
 
-## 5. The ensemble alone scores better than what is reported
+## 6. The ensemble alone scores better than what is reported
 
 The five-seed ensemble without the blend scores 0.9243 (8.4-fold) against the reported
 0.9339 (8.6-fold). The better number is not the headline because the blend weight was
@@ -78,7 +104,7 @@ fixed in advance and may not be re-chosen after seeing test scores; a sweep done
 on validation folds picked 0.5 rather than 1.0. The difference is 0.19 on a potency ratio
 and changes nothing anyone would decide. See `docs/design.md`.
 
-## 6. The five seeds can disagree more than the error bar
+## 7. The five seeds can disagree more than the error bar
 
 The headline is an average over five training runs that differ only in initialisation.
 On some pairs those five agree closely; on others they span more than 1.5 log units. The
@@ -89,7 +115,7 @@ five models failing to agree, averaged. That usually means the pair is unlike an
 training. The published 8.6-fold figure is an average over held-out data and does not
 cover this case.
 
-## 7. Three-class calls come from the number, not from a classifier
+## 8. Three-class calls come from the number, not from a classifier
 
 The network has a classification head, but the published models were trained with
 `--class-weight 0`, so it never learned anything and its outputs are ignored. The
@@ -97,7 +123,7 @@ worse / same / better call is the predicted Δp put through ±1 log unit thresho
 same thresholds the reported MCC is computed on. The number and the call therefore can
 never contradict each other, and the call inherits every limit above.
 
-## 8. What the data is and is not
+## 9. What the data is and is not
 
 ChEMBL 37, IC50 and similar endpoints, pooled across papers. Each molecule's potency is
 the median of its measurements on that target and assay type, and Δp is only taken within

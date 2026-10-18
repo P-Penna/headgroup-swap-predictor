@@ -56,8 +56,11 @@ def predicted_vs_measured(rows, path):
     headline = float(np.mean(per_fold))
 
     inside = float(np.mean(np.abs(predicted - truth) <= headline))
+    # How flat the cloud is. 1.0 would mean the model calls the SIZE of a
+    # change correctly on average; below 1 it shrinks big changes toward zero.
+    slope, intercept = np.polyfit(truth, predicted, 1)
 
-    figure, axes = plt.subplots(figsize=(7.6, 7.0))
+    figure, axes = plt.subplots(figsize=(8.2, 7.4))
     # Clipped to where the data actually is: 99.5% of comparisons sit inside
     # +-4, and a wider frame is mostly white space.
     extent = 4.0
@@ -68,39 +71,66 @@ def predicted_vs_measured(rows, path):
                       [-extent - headline, extent - headline],
                       [-extent + headline, extent + headline],
                       color="0.55", alpha=0.12, zorder=0,
-                      label=f"within ± one RMSE ({headline:.2f}) — holds {inside:.0%} of points")
-    axes.plot([-extent, extent], [-extent, extent], color="0.15", linewidth=1.4,
-              label="perfect prediction", zorder=3)
+                      label=f"typical-error band, ±{headline:.2f} log units "
+                            f"— {inside:.0%} of comparisons fall inside")
+    axes.plot([-extent, extent], [-extent, extent], color="0.15", linewidth=1.5,
+              zorder=3)
     for sign in (1, -1):
         axes.plot([-extent, extent],
                   [-extent + sign * headline, extent + sign * headline],
                   color="0.15", linewidth=1.0, linestyle="--", zorder=3)
+    # The line the cloud actually follows. The gap between this and the
+    # diagonal IS the conservatism, and it is the point of the figure.
+    axes.plot([-extent, extent],
+              [slope * -extent + intercept, slope * extent + intercept],
+              color="#d1500f", linewidth=2.2, zorder=4)
     axes.axhline(0, color="0.75", linewidth=0.7, zorder=1)
     axes.axvline(0, color="0.75", linewidth=0.7, zorder=1)
+
+    # Labelled on the lines themselves rather than in a legend, so nothing has
+    # to be looked up. 45 degrees on screen because the aspect is equal.
+    axes.text(2.70, 2.83, "perfect prediction",
+              rotation=45, rotation_mode="anchor", ha="center", va="bottom",
+              fontsize=9, color="0.15")
+    axes.text(3.55, slope * 3.55 + intercept - 0.18,
+              f"what it actually does\n(slope {slope:.2f}, not 1.00)",
+              rotation=np.degrees(np.arctan(slope)), rotation_mode="anchor",
+              ha="right", va="top", fontsize=8.5, color="#d1500f",
+              linespacing=1.4, fontweight="bold")
+
     axes.set_xlim(-extent, extent)
     axes.set_ylim(-extent, extent)
     axes.set_xticks(range(-4, 5))
     axes.set_yticks(range(-4, 5))
-    axes.set_xlabel("measured Δp (log units)   →  B more potent")
-    axes.set_ylabel("predicted Δp (log units)   →  B more potent")
-    axes.set_title("Held-out predictions against measurement\n"
-                   f"{len(rows):,} comparisons, all five test folds pooled",
+    axes.set_xlabel("what the lab MEASURED  (Δp, log units)", fontsize=10.5)
+    axes.set_ylabel("what the model PREDICTED  (Δp, log units)", fontsize=10.5)
+    axes.set_title("Does the prediction match the measurement?\n"
+                   f"one hexagon = how many of the {len(rows):,} held-out "
+                   f"comparisons landed there",
                    fontsize=12)
     axes.legend(loc="upper left", fontsize=8.5, framealpha=0.92)
     axes.set_aspect("equal")
 
-    bar = figure.colorbar(mesh, ax=axes, shrink=0.82, pad=0.02)
-    bar.set_label("comparisons per hexagon (log scale)", fontsize=9)
+    # Plain language on the top edge: what a log unit means in potency.
+    top = axes.secondary_xaxis("top")
+    top.set_xticks([-2, -1, 0, 1, 2])
+    top.set_xticklabels(["÷100", "÷10", "no change", "×10", "×100"], fontsize=9)
+    top.tick_params(length=0, pad=2)
+    top.set_xlabel("how much the swap changed potency", fontsize=9.5, labelpad=6)
 
-    # The two RMSEs are different statistics and both get named, so the figure
-    # can never be read as contradicting the tables.
-    axes.text(0.985, 0.015,
-              f"headline RMSE {headline:.4f} (mean of the five folds)\n"
-              f"pooled RMSE {scores['rmse']:.4f} (all rows at once)\n"
-              f"three-class MCC {scores['mcc_three_class']:+.3f}",
-              transform=axes.transAxes, ha="right", va="bottom", fontsize=8.5,
-              bbox=dict(boxstyle="round,pad=0.4", facecolor="white",
-                        edgecolor="0.7", alpha=0.92))
+    bar = figure.colorbar(mesh, ax=axes, shrink=0.82, pad=0.02)
+    bar.set_label("number of comparisons in that hexagon (log scale)", fontsize=9)
+
+    axes.text(0.5, -0.135,
+              f"A typical prediction misses by {headline:.2f} log units — "
+              f"a factor of {10 ** headline:.1f} in potency.\n"
+              f"The model reads the DIRECTION of a swap far better than its SIZE:\n"
+              f"where the lab measured a change above +2 it predicted "
+              f"{predicted[truth > 2].mean():+.2f} on average, "
+              f"and below −2 it predicted {predicted[truth < -2].mean():+.2f}."
+              .replace("-", "\u2212"),
+              transform=axes.transAxes, ha="center", va="top", fontsize=9,
+              color="0.25", linespacing=1.5)
     figure.savefig(path, dpi=150, bbox_inches="tight")
     plt.close(figure)
 

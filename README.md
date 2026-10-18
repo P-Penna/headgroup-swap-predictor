@@ -48,11 +48,12 @@ comparisons. The model beats both `zero` and `shrunk_target_mean` by more than
 ![Predicted against measured Δp for 16,116 held-out comparisons, as a log-scaled
 hexagonal density plot with the perfect-prediction diagonal and a ±RMSE band](results/predicted_vs_measured.png)
 
-*Every held-out comparison, all five test folds pooled. Colour is how many
-comparisons fall in each hexagon, on a log scale. The shaded band is one RMSE
-either side of perfect, and 73% of comparisons land inside it. The cloud is
-wider than it is tall, which is the model being conservative: it rarely predicts
-a swap will change potency as much as the measurement says it did.*
+*Every held-out comparison, all five test folds pooled. Each hexagon is shaded by
+how many comparisons fell in it, on a log scale. The shaded band is one typical
+error either side of perfect and holds 73% of them. The orange line is what the
+model actually does: its slope of 0.34, against the diagonal's 1.00, is the model
+squashing big changes toward zero — it reads the direction of a swap far better
+than the size. Limit 2 in `docs/limits.md` gives the numbers.*
 
 ![Held-out RMSE for every fold, comparing the model with all three required
 baselines and the shrunk_target_mean reference](results/rmse_by_fold.png)
@@ -157,13 +158,16 @@ ChEMBL.
 
 ## Limits worth reading before you use it
 
-The full list is `docs/limits.md`. The three that matter most:
+The full list is `docs/limits.md`. The four that matter most:
 
 1. **8.6-fold typical error.** A predicted Δp smaller than about 0.93 log units is inside
    the noise and should not be read as a real change.
-2. **No skill on proteins it never saw.** Much of what the model knows is which protein
+2. **Directions are far more trustworthy than sizes.** The model squashes big changes
+   toward zero: where the lab measured a gain above +2 log units it predicted +1.18 on
+   average. Rank candidates with it; do not use it to estimate how much you will gain.
+3. **No skill on proteins it never saw.** Much of what the model knows is which protein
    the swap is made on. The interface therefore offers a fixed list of trained targets
    and no free-text entry.
-3. **It does not check that your two molecules are otherwise identical.** It checks that
+4. **It does not check that your two molecules are otherwise identical.** It checks that
    exactly one headgroup differs and refuses otherwise, but if the molecules also differ
    elsewhere, the prediction is meaningless and nothing will tell you so.
