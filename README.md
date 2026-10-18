@@ -45,9 +45,25 @@ Each row is the mean of five molecule-disjoint test folds, on the same 16,116
 comparisons. The model beats both `zero` and `shrunk_target_mean` by more than
 2 standard errors on all five folds, paired and clustered by comparison.
 
-![Held-out predictions](results/predicted_vs_measured.png)
+![Predicted against measured Δp for 16,116 held-out comparisons, as a log-scaled
+hexagonal density plot with the perfect-prediction diagonal and a ±RMSE band](results/predicted_vs_measured.png)
 
-![RMSE by fold](results/rmse_by_fold.png)
+*Every held-out comparison, all five test folds pooled. Colour is how many
+comparisons fall in each hexagon, on a log scale. The shaded band is one RMSE
+either side of perfect, and 73% of comparisons land inside it. The cloud is
+wider than it is tall, which is the model being conservative: it rarely predicts
+a swap will change potency as much as the measurement says it did.*
+
+![Held-out RMSE for every fold, comparing the model with all three required
+baselines and the shrunk_target_mean reference](results/rmse_by_fold.png)
+
+*The same comparisons score every bar within a group, so the bars are directly
+comparable. The rightmost group is the headline. The model beats every baseline
+on every fold, and no bar comes near the noise floor — the limit set by labs
+disagreeing with each other, not by the model.*
+
+Both figures are redrawn from the published per-row predictions by
+`python app/make_figures.py`, so they cannot drift from the tables.
 
 ## Run the interface
 
