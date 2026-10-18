@@ -157,6 +157,22 @@ data/       the bioisostere slice; the full file is on Zenodo
 results/    the result tables and the two figures above
 models/     25 checkpoints: five folds x five seeds
 ```
+## Citing this work
+
+If you use this model, its weights, or the derived dataset in your own work,
+please cite it:
+
+> Penna, P. (2026). *Headgroup swap potency model: predicting ΔpIC50 for acidic
+> bioisostere replacements from matched molecular pairs.*
+> https://github.com/P-Penna/headgroup-swap-predictor
+
+The dataset has its own DOI and should be cited alongside:
+
+> Penna, P. (2026). *Headgroup swap potency data: matched molecular pairs from
+> ChEMBL 37* [Data set]. Zenodo. https://doi.org/10.5281/zenodo.23456998
+
+Please also cite ChEMBL, which the data derives from, and chemprop, which the
+encoder comes from.
 
 ## Licence
 
