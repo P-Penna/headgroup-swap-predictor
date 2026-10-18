@@ -29,13 +29,24 @@ the fold split is computed on. `pair_class` — always `bioisostere` in this fil
 
 The published model was trained on **all** pair classes, not just bioisosteres: headgroup
 changes that are not bioisosteric, deletions, and same-headgroup pairs as well. That file
-is **1,291,071 rows, 620 MB uncompressed and about 41 MB gzipped**, which is too large to
+is **1,291,070 rows, 620 MB uncompressed and 42.7 MB gzipped**, which is too large to
 keep in git, so it lives on Zenodo.
 
-> **DOI:** _to be filled in once the record is published — see "Depositing it" below._
+> **DOI: [10.5281/zenodo.23456998](https://doi.org/10.5281/zenodo.23456998)**
 >
-> Download `pairs.csv.gz` into `data/`. Nothing needs decompressing; pandas reads
-> `.csv.gz` directly, so the default `--all-pairs data/pairs.csv.gz` works as-is.
+> Download `pairs.csv.gz` (42.7 MB, md5 `5e8fccc93ab9fad77491d8ee4c9cfc9b`) into
+> `data/`. Nothing needs decompressing; pandas reads `.csv.gz` directly, so the
+> default `--all-pairs data/pairs.csv.gz` works as-is.
+
+```
+curl -L -o data/pairs.csv.gz https://zenodo.org/records/23456998/files/pairs.csv.gz
+md5sum data/pairs.csv.gz        # 5e8fccc93ab9fad77491d8ee4c9cfc9b
+```
+
+That DOI points at version 1, which is the exact file the published model was trained
+on. [10.5281/zenodo.23456997](https://doi.org/10.5281/zenodo.23456997) is the concept
+DOI and always resolves to the newest version instead — useful for a reader who wants
+the current data, wrong for reproducing these numbers.
 
 With it you can retrain the published model:
 
@@ -52,33 +63,22 @@ scratch.
 (`bioisostere`, `same_headgroup`, `to_non_acid`, `deletion`, and `not_a_swap` for the
 2,090 rows that failed the swap check and are never trained on).
 
-## Depositing it on Zenodo
+## Citing the data
 
-If you are reading this because you maintain the repository, here is the whole procedure.
+If you use the dataset, cite both it and ChEMBL. The ShareAlike licence requires the
+second; the first is ordinary courtesy.
 
-1. **Compress first.** `gzip -k pairs.csv` (wherever your copy lives) turns 620 MB into about 41 MB.
-   Zenodo accepts up to 50 GB per record, so this is only about making the download
-   civil.
-2. **Sign in** at <https://zenodo.org> with GitHub or ORCID. No application is needed.
-3. **New upload** → drag in `pairs.csv.gz`.
-4. **Upload type:** Dataset.
-5. **Title:** something that will still make sense alone, e.g. *Matched molecular pairs
-   of acidic headgroup swaps from ChEMBL 37, with potency differences*.
-6. **Creators:** you, with your ORCID if you have one.
-7. **Description:** what one row is (two molecules, a target, and Δp), how many rows,
-   which ChEMBL release, and that pairs are stored in both directions. Link back to the
-   GitHub repository.
-8. **Licence:** **Creative Commons Attribution-ShareAlike 3.0** — not your choice to make,
-   it is inherited from ChEMBL.
-9. **Related identifiers:** add the GitHub repository URL as *is supplement to*, and the
-   ChEMBL DOI `10.1093/nar/gkad1004` as *is derived from*.
-10. **Publish.** You get a DOI immediately, and it is permanent — a published Zenodo
-    record cannot be deleted, and new versions get their own DOI under a shared concept
-    DOI. Check the file before publishing.
-11. **Come back here** and replace the DOI placeholder above, and the one in `README.md`.
+```
+Penna, P. (2026). Matched molecular pairs of acidic headgroup swaps from ChEMBL 37,
+with potency differences [Dataset]. Zenodo. https://doi.org/10.5281/zenodo.23456998
 
-A reserved DOI is available before publishing (under "Basic information") if you want the
-README to be correct in the same commit that announces the dataset.
+Zdrazil B, Felix E, Hunter F, et al. The ChEMBL Database in 2023: a drug discovery
+platform spanning multiple bioactivity data types and time periods. Nucleic Acids
+Research. 2024;52(D1):D1180-D1192. doi:10.1093/nar/gkad1004
+```
+
+Anything you build on this data inherits CC BY-SA 3.0 and has to be shared on the same
+terms. That obligation comes from ChEMBL and is not ours to waive.
 
 ## Should the checkpoints go to Zenodo too?
 

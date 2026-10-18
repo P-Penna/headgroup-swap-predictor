@@ -121,9 +121,11 @@ appears in many pairs — a random split over pairs leaks badly and flatters the
   stored in both directions, from ChEMBL 37. This is the slice the interface and the
   baseline use, and it is in the repository (23 MB).
 - `data/target_properties.csv` — ChEMBL protein family for every target.
-- **The full `pairs.csv`** — 1.29M rows covering every pair class, which is what the
-  published model was trained on — is too large for git and is on Zenodo. See
-  `docs/data.md` for the DOI and how to use it.
+- **The full `pairs.csv`** — 1,291,070 rows covering every pair class, which is what the
+  published model was trained on — is too large for git and lives on Zenodo:
+  **[10.5281/zenodo.23456998](https://doi.org/10.5281/zenodo.23456998)** (42.7 MB
+  gzipped). Download it into `data/` and `app/train.py` finds it; `docs/data.md`
+  has the details.
 
 ## Retraining
 
