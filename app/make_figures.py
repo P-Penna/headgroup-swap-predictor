@@ -210,14 +210,12 @@ def rmse_by_fold(rows, baselines, stem):
         axes.bar(positions + (index - 2.5) * width, values, width, label=label,
                  color=colour, linewidth=0, zorder=2)
     axes.axhline(NOISE_FLOOR, color=VERMILLION, linewidth=0.8,
-                 linestyle=(0, (4, 3)), zorder=3)
-    axes.text(positions[-1] + 3.4 * width, NOISE_FLOOR + 0.03,
-              f"Experimental noise floor ({NOISE_FLOOR})", ha="right", va="bottom",
-              fontsize=6.5, color=VERMILLION)
+                 linestyle=(0, (4, 3)), zorder=3,
+                 label=f"Experimental noise floor ({NOISE_FLOOR})")
 
     axes.set_xticks(positions)
     axes.set_xticklabels(labels)
-    axes.set_xlim(positions[0] - 4 * width, positions[-1] + 3.8 * width)
+    axes.set_xlim(positions[0] - 4 * width, positions[-1] + 4 * width)
     axes.set_ylabel("RMSE (log units)")
     axes.set_ylim(0, 1.30)
     axes.yaxis.set_major_locator(MultipleLocator(0.25))
@@ -226,8 +224,12 @@ def rmse_by_fold(rows, baselines, stem):
     axes.tick_params(axis="y", which="minor", length=1.4, width=0.5)
     axes.grid(axis="y", color="0.92", linewidth=0.5, zorder=0)
     axes.set_axisbelow(True)
-    axes.legend(ncol=3, loc="upper center", bbox_to_anchor=(0.5, -0.17),
-                handlelength=1.1, handleheight=0.9, columnspacing=1.6,
+    handles, names = axes.get_legend_handles_labels()
+    order = [names.index(name) for name in series] + \
+            [i for i, name in enumerate(names) if name not in series]
+    axes.legend([handles[i] for i in order], [names[i] for i in order],
+                ncol=4, loc="upper center", bbox_to_anchor=(0.5, -0.17),
+                handlelength=1.3, handleheight=0.9, columnspacing=1.4,
                 labelspacing=0.4)
     save(figure, stem)
 
