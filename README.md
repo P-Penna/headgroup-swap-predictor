@@ -63,10 +63,6 @@ on every baseline in every fold; no configuration approaches the experimental
 noise floor, which is set by disagreement between laboratories rather than by
 the model.
 
-Both figures are regenerated from the published per-row predictions by
-`python app/make_figures.py`, as 400 dpi PNG and as vector PDF, so they cannot
-drift from the tables.
-
 ## Run the interface
 
 ```
