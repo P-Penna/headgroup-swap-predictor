@@ -47,7 +47,7 @@ model has no skill there and the list leaves it out rather than offering a confi
 number. Free-text target entry is deliberately not available.
 """
 
-# Real comparisons from data/pairs_bioisostere.csv, chosen to differ only at the
+# Real comparisons from data/pairs_bioisostere.csv.gz, chosen to differ only at the
 # headgroup. Most of them were in training for the loaded models, so the model
 # agreeing with the measured value on these is not evidence of anything.
 EXAMPLES = [

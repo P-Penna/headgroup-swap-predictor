@@ -4,8 +4,8 @@
 
 | file | size | what it is |
 |---|---|---|
-| `data/pairs_bioisostere.csv` | 22 MB | 57,184 rows — 20,210 distinct bioisostere comparisons, each stored in both directions (A→B and B→A) |
-| `data/target_properties.csv` | 1 MB | ChEMBL protein family (levels 1–3), organism and metal-binding flag for every target |
+| `data/pairs_bioisostere.csv.gz` | 1.6 MB | 57,184 rows — 20,210 distinct bioisostere comparisons, each stored in both directions (A→B and B→A) |
+| `data/target_properties.csv` | 0.2 MB | ChEMBL protein family (levels 1–3), organism and metal-binding flag for every target |
 
 Both are derived from **ChEMBL 37** and carry **CC BY-SA 3.0** — see `LICENSE`.
 
@@ -13,7 +13,7 @@ Each molecule's potency is the median of its measurements on that target and ass
 and Δp is only taken within one assay type. Values that were really placeholders rather
 than measurements have been censored out.
 
-`pairs_bioisostere.csv` is everything the interface needs: it fits the
+`pairs_bioisostere.csv.gz` is everything the interface needs: it fits the
 `shrunk_target_mean` baseline, builds the target dropdown and reproduces the fold split.
 
 ### Columns you will actually use

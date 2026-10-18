@@ -3,3 +3,4 @@
 *.png binary
 *.csv text eol=lf
 *.pdf binary
+*.gz binary

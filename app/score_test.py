@@ -1,7 +1,7 @@
 """Score a trained SiameseDelta checkpoint on its TEST fold, once.
 
 Reads:  models/<split>_fold<k>[_4fold].pt            from app/train.py
-        data/pairs_bioisostere.csv
+        data/pairs_bioisostere.csv.gz
         data/target_properties.csv
         results/baselines_disjoint_molecules.csv     the baselines' test rows and scores
 Writes: results/model_<split>_fold<k>_<n>fold[<tag>].csv   baselines' columns plus
@@ -88,7 +88,7 @@ def head_mcc(truth, head_class):
 def main():
     parser = argparse.ArgumentParser(description=__doc__,
                                      formatter_class=argparse.RawDescriptionHelpFormatter)
-    parser.add_argument("--inp", default=str(REPO_ROOT / "data/pairs_bioisostere.csv"))
+    parser.add_argument("--inp", default=str(REPO_ROOT / "data/pairs_bioisostere.csv.gz"))
     parser.add_argument("--target-properties",
                         default=str(REPO_ROOT / "data/target_properties.csv"))
     parser.add_argument("--baselines",

@@ -7,7 +7,9 @@ sdk: gradio
 sdk_version: 6.30.0
 app_file: app/app.py
 pinned: false
-license: mit
+license: other
+license_name: mit-for-code-cc-by-sa-3.0-for-data-and-weights
+license_link: LICENSE
 ---
 
 # Headgroup swap potency model
@@ -117,9 +119,10 @@ appears in many pairs — a random split over pairs leaks badly and flatters the
 
 ## Data
 
-- `data/pairs_bioisostere.csv` — 57,184 rows, i.e. 20,210 distinct comparisons each
+- `data/pairs_bioisostere.csv.gz` — 57,184 rows, i.e. 20,210 distinct comparisons each
   stored in both directions, from ChEMBL 37. This is the slice the interface and the
-  baseline use, and it is in the repository (23 MB).
+  baseline use, and it is in the repository (1.6 MB gzipped; pandas reads it without
+  unpacking).
 - `data/target_properties.csv` — ChEMBL protein family for every target.
 - **The full `pairs.csv`** — 1,291,070 rows covering every pair class, which is what the
   published model was trained on — is too large for git and lives on Zenodo:

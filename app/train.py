@@ -1,6 +1,6 @@
 """Train one fold of SiameseDelta and write its learning curve.
 
-Reads:  data/pairs_bioisostere.csv
+Reads:  data/pairs_bioisostere.csv.gz
         data/target_properties.csv
 Writes: results/train_<split>_fold<k>.csv    one row per epoch
         models/<split>_fold<k>.pt            the best checkpoint by val RMSE
@@ -157,7 +157,7 @@ def keeps_checkpoint(has_val_fold, keep_final, val_rmse, best_rmse):
 def main():
     parser = argparse.ArgumentParser(description=__doc__,
                                      formatter_class=argparse.RawDescriptionHelpFormatter)
-    parser.add_argument("--inp", default=str(REPO_ROOT / "data/pairs_bioisostere.csv"))
+    parser.add_argument("--inp", default=str(REPO_ROOT / "data/pairs_bioisostere.csv.gz"))
     parser.add_argument("--target-properties",
                         default=str(REPO_ROOT / "data/target_properties.csv"))
     parser.add_argument("--split", default="constant",

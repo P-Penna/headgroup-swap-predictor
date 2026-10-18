@@ -5,7 +5,7 @@ the shrunk_target_mean baseline exactly as the published headline does, and
 refuses to answer when the two molecules are not a single headgroup swap.
 
 Reads:  models/constant_fold<k>_4fold_cw0[_ms<n>]_allpc_e3.pt   five seeds
-        data/pairs_bioisostere.csv                             baseline + target list
+        data/pairs_bioisostere.csv.gz                             baseline + target list
         data/target_properties.csv                              protein family
 
 WHY A FOLD AT ALL
@@ -107,7 +107,7 @@ def _pretty(key):
 @lru_cache(maxsize=1)
 def _reference():
     """The pair table, its fold assignment, and the target properties."""
-    pairs = load_bioisostere_pairs(REPO_ROOT / "data/pairs_bioisostere.csv",
+    pairs = load_bioisostere_pairs(REPO_ROOT / "data/pairs_bioisostere.csv.gz",
                                    REPO_ROOT / "data/target_properties.csv")
     result = _split_result(pairs, SPLIT, N_FOLDS, SEED)
     properties = pd.read_csv(REPO_ROOT / "data/target_properties.csv")
