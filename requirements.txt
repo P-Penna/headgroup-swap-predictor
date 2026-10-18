@@ -1,8 +1,9 @@
-# Pinned to the versions the interface was actually tested on (macOS arm64,
-# Python 3.11). Hugging Face Spaces reads this file from the repository root.
+# Pinned to the versions this was tested on (Python 3.11).
+# Streamlit Community Cloud installs this file from the repository root.
+#
 # For a local conda install, config/environment.yml is the better route: pip
 # builds of torch and chemprop clash with conda's libraries on macOS.
-gradio==6.30.0
+streamlit==1.66.0
 torch==2.13.0
 chemprop==2.3.1
 rdkit==2026.3.6
@@ -10,3 +11,7 @@ pandas==3.0.6
 numpy==2.4.6
 scikit-learn==1.9.1
 matplotlib==3.11.2
+
+# The Gradio interface (app/app.py) is optional and not needed to run the
+# Streamlit app. Install it only if you want to run that one locally:
+#   pip install gradio==6.30.0

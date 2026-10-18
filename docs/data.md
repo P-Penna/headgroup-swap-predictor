@@ -85,9 +85,9 @@ terms. That obligation comes from ChEMBL and is not ours to waive.
 **No — keep them in git, and optionally mirror them.**
 
 The 25 checkpoints are 2.7 MB each, 65 MB in total. They stay in the repository because
-the interface cannot run without them: a Hugging Face Space is a git clone, so a model
-fetched from Zenodo at startup would mean a download on every cold boot and a Space that
-breaks when Zenodo is slow. 65 MB is also comfortably within what git handles well — no
+the interface cannot run without them: the hosted app is built from a git clone, so
+weights fetched from Zenodo at startup would mean a download on every cold boot and an
+app that breaks when Zenodo is slow. 65 MB is also comfortably within what git handles well — no
 Git LFS needed, and well under GitHub's 100 MB per-file limit.
 
 The one reason to *also* put them on Zenodo is citability: a DOI for the exact weights

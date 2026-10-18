@@ -34,9 +34,13 @@ To change which fold's five seeds are loaded, set `HEADGROUP_FOLD` (see
 `config/.env.example`). Running two different folds on the same pair is a cheap sanity
 check: they are genuinely different models.
 
-On Hugging Face Spaces nothing needs changing. The YAML at the top of `README.md` points
-`app_file` at `app/app.py`, and `requirements.txt` sits at the repository root where
-Spaces looks for it.
+To deploy it, point Streamlit Community Cloud at this repository with
+`app/streamlit_app.py` as the main file. It installs `requirements.txt` from the
+repository root, and nothing in the repository needs changing.
+
+A Gradio version of the same interface is in `app/app.py` for local use
+(`pip install gradio==6.30.0`, then `python app/app.py`). Both call the same
+`app/predict.py`, so they always agree.
 
 ## Reading the output
 

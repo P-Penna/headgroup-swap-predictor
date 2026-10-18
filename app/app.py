@@ -1,7 +1,10 @@
 """Gradio interface for the headgroup swap potency model.
 
-Run locally:      python app/app.py
-Hugging Face:     this file is the Space's app_file; nothing needs changing.
+Run locally:      pip install gradio==6.30.0 && python app/app.py
+
+This is the local-use interface. The hosted copy runs app/streamlit_app.py on
+Streamlit Community Cloud; both are thin layers over app/predict.py and always
+give the same answer.
 
 Everything the interface claims is computed in app/predict.py, which loads the
 five published seeds of one fold and blends them with the shrunk_target_mean

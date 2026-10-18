@@ -1,17 +1,3 @@
----
-title: Headgroup Swap Potency Model
-emoji: 🧪
-colorFrom: blue
-colorTo: gray
-sdk: gradio
-sdk_version: 6.30.0
-app_file: app/app.py
-pinned: false
-license: other
-license_name: mit-for-code-cc-by-sa-3.0-for-data-and-weights
-license_link: LICENSE
----
-
 # Headgroup swap potency model
 
 Predicts how much a drug's potency changes when its acidic headgroup is swapped for a
@@ -79,15 +65,22 @@ drift from the tables.
 ```
 conda env create -f config/environment.yml
 conda activate headgroup-swap
-python app/app.py
+streamlit run app/streamlit_app.py
 ```
 
-Then open the local URL it prints. First prediction takes a second or two while the five
-checkpoints load; after that it is immediate.
+Then open the local URL it prints. Startup takes about ten seconds while the five
+checkpoints load and the baseline is fitted; predictions after that are immediate.
 
-The same repository is a Hugging Face Space with no changes — the front matter at the top
-of this file points `app_file` at `app/app.py`, and `requirements.txt` is at the root
-where Spaces expects it.
+There are two interfaces over the same backend. `app/streamlit_app.py` is the one that
+deploys to [Streamlit Community Cloud](https://streamlit.io/cloud) and the one
+`requirements.txt` installs. `app/app.py` is a Gradio version of the same thing for
+local use — `pip install gradio==6.30.0`, then `python app/app.py`. Both are thin
+presentation layers over `app/predict.py`, so neither can drift from the other or from
+the published numbers.
+
+The hosted copy runs on Streamlit Community Cloud, which installs `requirements.txt`
+from the repository root and runs `app/streamlit_app.py`. Nothing in the repository
+needs changing to deploy it.
 
 `docs/user-guide.md` explains what each part of the output means.
 
@@ -145,8 +138,9 @@ repository alone.
 ## Layout
 
 ```
-app/        the model, the Gradio interface, training and scoring
-  app.py            the interface
+app/        the model, both interfaces, training and scoring
+  streamlit_app.py  the interface (this is what gets deployed)
+  app.py            the same interface in Gradio, for local use
   predict.py        loading, the ensemble, the blend, the input checks
   model.py          the network
   pair_dataset.py   pairs -> molecule graphs, folds, vocabularies

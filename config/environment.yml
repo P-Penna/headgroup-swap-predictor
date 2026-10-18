@@ -2,20 +2,20 @@
 #
 #   conda env create -f config/environment.yml
 #   conda activate headgroup-swap
-#   python app/app.py
+#   streamlit run app/streamlit_app.py
 #
 # Versions are pinned to what the published result was produced and the
 # interface was tested on (macOS arm64, 2026-10).
 #
-# Everything comes from conda-forge except gradio, which conda-forge carries
-# but lags on, so it is installed by pip. Do NOT `pip install` torch, rdkit or
+# Everything comes from conda-forge except streamlit, which is installed by pip
+# to match the pinned version. Do NOT `pip install` torch, rdkit or
 # chemprop into this env: the pip builds ship their own copies of compiled
 # libraries which clash with the conda ones.
 #   - pip torch bundles its own OpenMP -> Python aborts with "OMP: Error #15"
 #   - pip chemprop pulls cuik-molmaker-pin, built against pip rdkit -> ImportError
 #
-# Hugging Face Spaces does not read this file; it reads requirements.txt at the
-# repository root. The two are kept at the same versions on purpose.
+# Streamlit Community Cloud does not read this file; it reads requirements.txt at
+# the repository root. The two are kept at the same versions on purpose.
 name: headgroup-swap
 channels:
   - conda-forge
@@ -32,4 +32,6 @@ dependencies:
   - matplotlib=3.11.2
   - pip=26.2.1
   - pip:
-      - gradio==6.30.0
+      - streamlit==1.66.0
+      # Optional, only for the Gradio interface in app/app.py:
+      # - gradio==6.30.0
